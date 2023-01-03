@@ -24,7 +24,74 @@ def getFeedback(guess, secretWord):
             str: Feedback string, based on comparing guess with the secret word
     '''
 
-    test = "heyyyy"
-    pull = "u got no rizz"
+    guess = guess.lower()
+    secretWord = secretWord.lower()
+    final = ""
+    breaking = False
 
-    return(test)
+    # ("MOMMY", "MADAM") --> "M-m--"
+
+    # round 1: find the equals
+    # round 2: find the locations
+    # round 3: find the nonequals
+
+    for letter in range(len(guess)):
+        if guess[letter] == secretWord[letter]:
+            secretWord = secretWord.replace(guess[letter], '+', 1)
+            final += guess[letter].capitalize()
+
+        elif guess[letter] != secretWord[letter] and guess[letter] in secretWord:
+            
+            if secretWord.count(guess[letter]) == 1:
+                for char in range(len(guess)):
+                    if guess[char] == secretWord[char]:
+                        breaking = True
+                        break
+            
+            if breaking == False:
+                secretWord = secretWord.replace(guess[letter], '+', 1)
+                final += guess[letter].lower()
+            else:
+                final += "-"
+        else:
+            final += "-"
+
+
+
+
+    # for letter in range(len(guess)):
+    #     if guess[letter] == secretWord[letter]:
+    #         secretWord = secretWord.replace(guess[letter], '+', 1)
+    #         final += guess[letter].capitalize()
+    
+    # for letter in range(len(guess)):
+    #     if guess[letter] != secretWord[letter] and guess[letter] in secretWord:
+    #         secretWord = secretWord.replace(guess[letter], '+', 1) 
+    #         final += guess[letter].lower()
+    #     else:
+    #          final += "-"
+           
+
+
+
+    # for letter in range(len(guess)):
+    #     if guess[letter] != secretWord[letter] and guess[letter] in secretWord:
+    #         print("location")
+    #         secretWord = secretWord.replace(guess[letter], '+', 1) 
+    #         final += guess[letter].lower()
+    #         print(secretWord)
+
+    #     elif guess[letter] == secretWord[letter]:
+    #         print("right")
+    #         secretWord = secretWord.replace(guess[letter], '+', 1) 
+    #         final += guess[letter].capitalize()
+    #         print(secretWord)
+
+    #     else:
+    #         print("wrong")
+    #         final += "-"
+    #         print(secretWord)
+
+    return final
+
+print(getFeedback("lever", "EATEN"))
