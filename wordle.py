@@ -23,3 +23,4 @@ def getFeedback(guess, secretWord):
             str: Feedback string, based on comparing guess with the secret word
     '''
 
+    return("hh")
