@@ -24,6 +24,6 @@ def getFeedback(guess, secretWord):
     '''
 
     test = "heyyyy"
-    pull = "no riz"
+    pull = "u got no rizz"
 
     return(test)
