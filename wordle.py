@@ -26,8 +26,8 @@ def getFeedback(guess, secretWord):
 
     guess = guess.lower()
     secretWord = secretWord.lower()
-    final = ""
-    breaking = False
+    final = list(guess)
+    finalStr = ""
 
     # ("MOMMY", "MADAM") --> "M-m--"
 
@@ -35,30 +35,27 @@ def getFeedback(guess, secretWord):
     # round 2: find the locations
     # round 3: find the nonequals
 
+    # + is found
+    # letter is not found
+
+
     for letter in range(len(guess)):
         if guess[letter] == secretWord[letter]:
             secretWord = secretWord.replace(guess[letter], '+', 1)
-            final += guess[letter].capitalize()
+            final[letter] = guess[letter].capitalize()
 
-        elif guess[letter] != secretWord[letter] and guess[letter] in secretWord:
-            
-            if secretWord.count(guess[letter]) == 1:
-                for char in range(len(guess)):
-                    if guess[char] == secretWord[char]:
-                        breaking = True
-                        break
-            
-            if breaking == False:
-                secretWord = secretWord.replace(guess[letter], '+', 1)
-                final += guess[letter].lower()
-            
-            else:
-                final += "-"
+    for letter in range(len(guess)):
+        if guess[letter] != secretWord[letter] and guess[letter] in secretWord and secretWord[letter] != "+":
+            secretWord = secretWord.replace(guess[letter], '*', 1)
+            final[letter] = guess[letter].lower()
+        elif guess[letter] != secretWord[letter] and guess[letter] not in secretWord and secretWord[letter] != "+" and secretWord[letter] != "*":
+            final[letter] = "-"
 
-        else:
-            final += "-"
 
-    return final
+    for char in final:
+        finalStr += char
+
+    return finalStr
 
 print("MOTTO")
 print("TOOTH")
