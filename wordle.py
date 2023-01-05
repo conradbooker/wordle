@@ -51,47 +51,15 @@ def getFeedback(guess, secretWord):
             if breaking == False:
                 secretWord = secretWord.replace(guess[letter], '+', 1)
                 final += guess[letter].lower()
+            
             else:
                 final += "-"
+
         else:
             final += "-"
 
-
-
-
-    # for letter in range(len(guess)):
-    #     if guess[letter] == secretWord[letter]:
-    #         secretWord = secretWord.replace(guess[letter], '+', 1)
-    #         final += guess[letter].capitalize()
-    
-    # for letter in range(len(guess)):
-    #     if guess[letter] != secretWord[letter] and guess[letter] in secretWord:
-    #         secretWord = secretWord.replace(guess[letter], '+', 1) 
-    #         final += guess[letter].lower()
-    #     else:
-    #          final += "-"
-           
-
-
-
-    # for letter in range(len(guess)):
-    #     if guess[letter] != secretWord[letter] and guess[letter] in secretWord:
-    #         print("location")
-    #         secretWord = secretWord.replace(guess[letter], '+', 1) 
-    #         final += guess[letter].lower()
-    #         print(secretWord)
-
-    #     elif guess[letter] == secretWord[letter]:
-    #         print("right")
-    #         secretWord = secretWord.replace(guess[letter], '+', 1) 
-    #         final += guess[letter].capitalize()
-    #         print(secretWord)
-
-    #     else:
-    #         print("wrong")
-    #         final += "-"
-    #         print(secretWord)
-
     return final
 
-print(getFeedback("lever", "EATEN"))
+print("MOTTO")
+print("TOOTH")
+print(getFeedback("TOOTH", "MOTTO"))
