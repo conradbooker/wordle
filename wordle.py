@@ -26,6 +26,7 @@ def getFeedback(guess, secretWord):
 
     guess = guess.lower()
     secretWord = secretWord.lower()
+    secretWord = list(secretWord)
     final = list(guess)
     finalStr = ""
 
@@ -41,22 +42,30 @@ def getFeedback(guess, secretWord):
 
     for letter in range(len(guess)):
         if guess[letter] == secretWord[letter]:
-            secretWord = secretWord.replace(guess[letter], '+', 1)
-            final[letter] = guess[letter].capitalize()
+            secretWord[letter] = "+"
+            final[letter] = "+"
+            print("secretWord: " + str(secretWord))
 
     for letter in range(len(guess)):
-        if guess[letter] != secretWord[letter] and guess[letter] in secretWord and secretWord[letter] != "+":
-            secretWord = secretWord.replace(guess[letter], '*', 1)
-            final[letter] = guess[letter].lower()
-        elif guess[letter] != secretWord[letter] and guess[letter] not in secretWord and secretWord[letter] != "+" and secretWord[letter] != "*":
-            final[letter] = "-"
+        # MOMMY
+        # MADAM
+        if final[letter] != secretWord[letter] and final[letter] in secretWord:
+            secretWord[secretWord.index(final[letter])] = "*"
+            final[letter] = "*"
+        print(guess[letter] + ": " + str(final))
 
-
-    for char in final:
-        finalStr += char
+    
+    for char in range(len(final)):
+        if final[char] == "+":
+            finalStr += guess[char].upper()
+        elif final[char] == "*":
+            finalStr += guess[char]
+        else:
+            finalStr += "-"
 
     return finalStr
 
 print("MOTTO")
 print("TOOTH")
 print(getFeedback("TOOTH", "MOTTO"))
+print("1", "1".isalpha())
