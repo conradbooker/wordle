@@ -60,3 +60,19 @@ def getFeedback(guess, secretWord):
 print("MOTTO")
 print("TOOTH")
 print(getFeedback("TOOTH", "MOTTO"))
+
+def getColor(guess, secretWord):
+    checkedGuess = getFeedback(guess, secretWord)
+    colorString = ""
+
+    for char in checkedGuess:
+        if char.isupper():
+            colorString += (Fore.WHITE + Back.GREEN + char.upper())
+        elif char.islower():
+            colorString += (Fore.WHITE + Back.YELLOW + char.upper())
+        else:
+            colorString += (Fore.WHITE + Back.WHITE + char.upper())
+
+    return colorString
+
+print(getColor("TOOTH", "MOTTO"))
