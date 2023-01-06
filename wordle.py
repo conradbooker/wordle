@@ -1,4 +1,5 @@
 from colorama import init, Fore, Back, Style
+from wordle_wordlist import getWordList
 init()
 import itertools
 
@@ -30,6 +31,9 @@ def getFeedback(guess, secretWord):
     final = list(guess)
     finalStr = ""
 
+    if guess == secretWord:
+        return secretWord.upper()
+
     # ("MOMMY", "MADAM") --> "M-m--"
 
     # round 1: find the equals
@@ -44,7 +48,7 @@ def getFeedback(guess, secretWord):
         if guess[letter] == secretWord[letter]:
             secretWord[letter] = "+"
             final[letter] = "+"
-            print("secretWord: " + str(secretWord))
+            # print("secretWord: " + str(secretWord))
 
     for letter in range(len(guess)):
         # MOMMY
@@ -52,7 +56,7 @@ def getFeedback(guess, secretWord):
         if final[letter] != secretWord[letter] and final[letter] in secretWord:
             secretWord[secretWord.index(final[letter])] = "*"
             final[letter] = "*"
-        print(guess[letter] + ": " + str(final))
+        # print(guess[letter] + ": " + str(final))
 
     
     for char in range(len(final)):
@@ -85,3 +89,7 @@ def getColor(guess, secretWord):
     return colorString
 
 print(getColor("TOOTH", "MOTTO"))
+
+def playGame(wordList):
+    input = input("")
+    
