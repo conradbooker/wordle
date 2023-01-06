@@ -1,5 +1,6 @@
 from colorama import init, Fore, Back, Style
 from wordle_wordlist import getWordList
+import random
 init()
 import itertools
 
@@ -81,16 +82,40 @@ def getColor(guess, secretWord):
     for i in range(len(checkedGuess)):
         if checkedGuess[i].isupper():
             colorString += (Fore.WHITE + Back.GREEN + guess[i].upper())
+            colorString += (Style.RESET_ALL)
         elif checkedGuess[i].islower():
             colorString += (Fore.WHITE + Back.YELLOW + guess[i].upper())
+            colorString += (Style.RESET_ALL)
         else:
             colorString += (Style.RESET_ALL)
             colorString += (Fore.WHITE + guess[i].upper())
+            colorString += (Style.RESET_ALL)
 
     return colorString
 
 print(getColor("TOOTH", "MOTTO"))
 
 def playGame(wordList):
-    input = input("")
+    secretWord = wordList[random.randint(0, len(wordList))]
+    print(F"\n-----Welcome to WORDLE-----\n")
+    guess = input("Insert a 5 letter guess: ")
+
+    feedback = getColor(guess, secretWord)
+    print(feedback)
+    attempts = 0
+
+    while attempts <= 5 and guess != secretWord:
+        guess = input("Enter guess: ")
+        if len(guess) < 5:
+            while len(guess) < 5:
+                guess = input("Invalid input dumbfuck: ")
+        else:
+            feedback += ("\n" + getColor(guess, secretWord))
+            print(feedback)
+
+
+
+
+wordList = getWordList()
+playGame(wordList)
     
