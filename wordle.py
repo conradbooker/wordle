@@ -74,13 +74,13 @@ def getColor(guess, secretWord):
     checkedGuess = getFeedback(guess, secretWord)
     colorString = ""
 
-    for char in checkedGuess:
-        if char.isupper():
-            colorString += (Fore.WHITE + Back.GREEN + char.upper())
-        elif char.islower():
-            colorString += (Fore.WHITE + Back.YELLOW + char.upper())
+    for i in range(len(checkedGuess)):
+        if checkedGuess[i].isupper():
+            colorString += (Fore.WHITE + Back.GREEN + guess[i].upper())
+        elif checkedGuess[i].islower():
+            colorString += (Fore.WHITE + Back.YELLOW + guess[i].upper())
         else:
-            colorString += (Fore.WHITE + Back.WHITE + char.upper())
+            colorString += (Fore.WHITE + Back.WHITE + guess[i].upper())
 
     return colorString
 
