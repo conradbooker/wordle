@@ -80,7 +80,8 @@ def getColor(guess, secretWord):
         elif checkedGuess[i].islower():
             colorString += (Fore.WHITE + Back.YELLOW + guess[i].upper())
         else:
-            colorString += (Fore.WHITE + Back.WHITE + guess[i].upper())
+            colorString += (Style.RESET_ALL)
+            colorString += (Fore.WHITE + guess[i].upper())
 
     return colorString
 
