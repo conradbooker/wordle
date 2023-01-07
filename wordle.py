@@ -106,8 +106,8 @@ def playGame(wordList):
 
     while attempts <= 5 and guess != secretWord:
         guess = input("Enter guess: ")
-        if len(guess) < 5:
-            while len(guess) < 5:
+        if len(guess) < 5 or len(guess) > 5:
+            while len(guess) < 5 or len(guess) > 5:
                 guess = input("Invalid input dumbfuck: ")
         else:
             feedback += ("\n" + getColor(guess, secretWord))
