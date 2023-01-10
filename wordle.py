@@ -77,7 +77,7 @@ print("1", "1".isalpha())
 
 def getColor(guess, secretWord):
     checkedGuess = getFeedback(guess, secretWord)
-    colorString = ""
+    colorString = (Back.WHITE + " ")
 
     for i in range(len(checkedGuess)):
         if checkedGuess[i].isupper():
@@ -90,6 +90,9 @@ def getColor(guess, secretWord):
             colorString += (Style.RESET_ALL)
             colorString += (Fore.WHITE + guess[i].upper())
             colorString += (Style.RESET_ALL)
+
+    colorString += (Back.WHITE + " ")
+    colorString += (Style.RESET_ALL)
 
     return colorString
 
