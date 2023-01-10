@@ -99,28 +99,44 @@ def playGame(wordList):
     secretWord = wordList[random.randint(0, len(wordList))]
     print(F"\n-----Welcome to WORDLE-----\n")
     guess = input("Insert a 5 letter guess: ")
-    finished = False
+    guesses = []
+
+    while guess.upper() not in wordList:
+        guess = input("Input a valid word: ")
+        print(guess)
+
 
     feedback = getColor(guess, secretWord)
     print(feedback)
-    attempts = 0
+    attempts = 1
+    guesses.append(guess)
 
     while attempts <= 5 and guess.lower() != secretWord.lower():
         guess = input("Enter guess: ")
         attempts += 1
 
-        while guess not in wordList:
+        while guess.upper() not in wordList:
             guess = input("Input a valid word: ")
+        guesses.append(guess)
+        # top and bottom border here
         feedback += ("\n" + getColor(guess, secretWord))
         print(feedback)
 
-
-
-    if attempts > 5:
-        print("You lost!")
-    else:
+    if secretWord == guess:
         print("You win!")
+    else:
+        print("You lost!")
+        print("The secret word was: " + secretWord)
 
+def getAIGuess(wordList, guesses, feedback):
+    '''Analyzes feedback from previous guesses (if any) to make a new guess
+        Args:
+            wordList (list): A list of potential Wordle words
+            guesses (list): A list of string guesses
+            feedback (list): A list of feedback strings
+        Returns:
+         str: a valid guess that is exactly 5 uppercase letters
+    '''
 
 
 
