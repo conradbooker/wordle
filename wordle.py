@@ -99,23 +99,38 @@ def playGame(wordList):
     secretWord = wordList[random.randint(0, len(wordList))]
     print(F"\n-----Welcome to WORDLE-----\n")
     guess = input("Insert a 5 letter guess: ")
+    finished = False
 
     feedback = getColor(guess, secretWord)
     print(feedback)
     attempts = 0
 
-    while attempts <= 5 and guess != secretWord:
+    while attempts <= 5 and guess.lower() != secretWord.lower():
         guess = input("Enter guess: ")
-        if len(guess) < 5 or len(guess) > 5:
-            while len(guess) < 5 or len(guess) > 5:
-                guess = input("Invalid input dumbfuck: ")
-        else:
-            feedback += ("\n" + getColor(guess, secretWord))
-            print(feedback)
+        attempts += 1
+
+        while guess not in wordList:
+            guess = input("Input a valid word: ")
+        feedback += ("\n" + getColor(guess, secretWord))
+        print(feedback)
+
+
+
+    if attempts > 5:
+        print("You lost!")
+    else:
+        print("You win!")
 
 
 
 
 wordList = getWordList()
-playGame(wordList)
+playGameBool = True
+
+while playGameBool == True:
+    playGame(wordList)
+    playAgain = input("Do you want to play again?")
+    if playAgain.lower() not in ["yes","y","yas","yass","uh huh"]:
+        playGameBool = False
+    
     
