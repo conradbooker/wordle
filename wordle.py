@@ -102,23 +102,54 @@ def playGame(wordList):
     secretWord = wordList[random.randint(0, len(wordList))]
     print(F"\n-----Welcome to WORDLE-----\n")
     guess = input("Insert a 5 letter guess: ")
+    guesses = []
+
+    while guess.upper() not in wordList:
+        guess = input("Input a valid word: ")
+        print(guess)
+
 
     feedback = getColor(guess, secretWord)
     print(feedback)
-    attempts = 0
+    attempts = 1
+    guesses.append(guess)
 
-    while attempts <= 5 and guess != secretWord:
+    while attempts <= 5 and guess.lower() != secretWord.lower():
         guess = input("Enter guess: ")
-        if len(guess) < 5:
-            while len(guess) < 5:
-                guess = input("Invalid input dumbfuck: ")
-        else:
-            feedback += ("\n" + getColor(guess, secretWord))
-            print(feedback)
+        attempts += 1
 
+        while guess.upper() not in wordList:
+            guess = input("Input a valid word: ")
+        guesses.append(guess)
+        # top and bottom border here
+        feedback += ("\n" + getColor(guess, secretWord))
+        print(feedback)
+
+    if secretWord == guess:
+        print("You win!")
+    else:
+        print("You lost!")
+        print("The secret word was: " + secretWord)
+
+def getAIGuess(wordList, guesses, feedback):
+    '''Analyzes feedback from previous guesses (if any) to make a new guess
+        Args:
+            wordList (list): A list of potential Wordle words
+            guesses (list): A list of string guesses
+            feedback (list): A list of feedback strings
+        Returns:
+         str: a valid guess that is exactly 5 uppercase letters
+    '''
 
 
 
 wordList = getWordList()
-playGame(wordList)
+playGameBool = True
+
+while playGameBool == True:
+    playGame(wordList)
+    playAgain = input("Do you want to play again?")
+    if playAgain.lower() not in ["yes","y","yas","yass","uh huh"]:
+        playGameBool = False
+    
     
