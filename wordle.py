@@ -98,13 +98,15 @@ print(getColor("TOOTH", "MOTTO"))
 def playGame(wordList):
     secretWord = wordList[random.randint(0, len(wordList))]
     print(F"\n-----Welcome to WORDLE-----\n")
-    guess = input("Insert a 5 letter guess: ")
+    guess = input("Enter 5 letter guess (\"AI\") for AI: ")
     guesses = []
+    feedbacks = []
 
-    while guess.upper() not in wordList:
-        guess = input("Input a valid word: ")
-        print(guess)
-
+    if guess.lower() == "ai":
+        guess = getAIGuess(wordList, guesses, feedbacks)
+    else:
+        while guess.upper() not in wordList:
+            guess = input("Input a valid word: ")
 
     feedback = getColor(guess, secretWord)
     print(feedback)
@@ -112,14 +114,22 @@ def playGame(wordList):
     guesses.append(guess)
 
     while attempts <= 5 and guess.lower() != secretWord.lower():
-        guess = input("Enter guess: ")
+        guess = input("Enter guess (\"AI\") for AI: ")
         attempts += 1
 
-        while guess.upper() not in wordList:
-            guess = input("Input a valid word: ")
+        if guess.lower() == "ai":
+            guess = getAIGuess(wordList, guesses, feedbacks)
+        else:
+            while guess.upper() not in wordList:
+                guess = input("Input a valid word: ")
         guesses.append(guess)
+        feedbacks.append(getFeedback(guess, secretWord))
         # top and bottom border here
-        feedback += ("\n" + getColor(guess, secretWord))
+        feedback = ""
+        feedback += (getColor("whitespace at the top"))
+        for guessNew in guesses:
+            feedback += "\n" + getColor(guess, secretWord)
+        feedback += (getColor("whitespace at the bottom"))
         print(feedback)
 
     if secretWord == guess:
@@ -137,6 +147,31 @@ def getAIGuess(wordList, guesses, feedback):
         Returns:
          str: a valid guess that is exactly 5 uppercase letters
     '''
+
+    capitalLocs = {}
+    lowerLocs = {}
+
+    rand = random.randint(0,len(wordList)-1)
+    if len(guesses) == 0:
+        return wordList[rand]
+
+    for guess in feedback:
+        for char in guess:
+            if char.Islower():
+                if lowerLocs.get(char) == None:
+                    lowerLocs[char] = 0
+                else:
+                    lowerLocs[char] += 1
+            elif char.isupper():
+                if capitalLocs.get(char) == None:
+                    capitalLocs[char] = 0
+                else:
+                    capitalLocs[char] += 1
+
+
+
+
+    # ["-e-E-",""]
 
 
 
