@@ -77,7 +77,7 @@ print("1", "1".isalpha())
 
 def getColor(guess, secretWord):
     checkedGuess = getFeedback(guess, secretWord)
-    colorString = ""
+    colorString = (Back.WHITE + " ")
 
     for i in range(len(checkedGuess)):
         if checkedGuess[i].isupper():
@@ -90,6 +90,9 @@ def getColor(guess, secretWord):
             colorString += (Style.RESET_ALL)
             colorString += (Fore.WHITE + guess[i].upper())
             colorString += (Style.RESET_ALL)
+
+    colorString += (Back.WHITE + " ")
+    colorString += (Style.RESET_ALL)
 
     return colorString
 
@@ -108,7 +111,7 @@ def playGame(wordList):
         while guess.upper() not in wordList:
             guess = input("Input a valid word: ")
 
-    feedback = getColor(guess, secretWord)
+    feedback = (Style.RESET_ALL+ Back.WHITE + "       \n" + getColor(guess, secretWord) + "       \n" + Style.RESET_ALL)
     print(feedback)
     attempts = 1
     guesses.append(guess)
@@ -125,11 +128,7 @@ def playGame(wordList):
         guesses.append(guess)
         feedbacks.append(getFeedback(guess, secretWord))
         # top and bottom border here
-        feedback = ""
-        feedback += (getColor("whitespace at the top"))
-        for guessNew in guesses:
-            feedback += "\n" + getColor(guess, secretWord)
-        feedback += (getColor("whitespace at the bottom"))
+        feedback += ("\n" + getColor(guess, secretWord))
         print(feedback)
 
     if secretWord == guess:
