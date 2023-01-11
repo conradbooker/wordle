@@ -109,7 +109,7 @@ def playGame(wordList):
         print(guess)
 
 
-    feedback = getColor(guess, secretWord)
+    feedback = (Style.RESET_ALL+ Back.WHITE + "       \n" + getColor(guess, secretWord) + "       \n" + Style.RESET_ALL)
     print(feedback)
     attempts = 1
     guesses.append(guess)
@@ -122,7 +122,12 @@ def playGame(wordList):
             guess = input("Input a valid word: ")
         guesses.append(guess)
         # top and bottom border here
-        feedback += ("\n" + getColor(guess, secretWord))
+        feedback = (Style.RESET_ALL + Back.WHITE + "       \n" + Style.RESET_ALL)
+        for guess in guesses:
+            feedback += (Style.RESET_ALL + "\n" + getColor(guess, secretWord) + Style.RESET_ALL)
+        feedback += (Style.RESET_ALL + Back.WHITE + "       \n" + Style.RESET_ALL)
+       # feedback += (Style.RESET_ALL)
+    
         print(feedback)
 
     if secretWord == guess:
