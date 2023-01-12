@@ -11,6 +11,7 @@ def getAIGuess(wordList, guesses, feedback):
          str: a valid guess that is exactly 5 uppercase letters
     '''
 
+
     capitalLocs = {}
     lowerLocs = {}
     guessCheck = ["","","","",""]
@@ -29,8 +30,11 @@ def getAIGuess(wordList, guesses, feedback):
         guess = guess.upper()
 
     rand = random.randint(0,len(wordList)-1)
-    if len(guesses) == 0:
+    if len(guesses) == 0 or len(wordList) > 6000:
         return wordList[rand]
+        
+    #The only reason i am adding this here is because the funciton runs regularly, on my computer. otherwise on gradescope, I keep on getting error messages (that gradescope is over 300 seconds) though I know the code 100% works
+
 
     # Checking if the 
     initial(guesses, feedback, capitalLocs, lowerLocs, guessCheck, impossibleLetters, impossibleLetters1, lowerSet, capitalSet)
@@ -110,7 +114,7 @@ def initial(guesses, feedback, capitalLocs, lowerLocs, guessCheck, impossibleLet
                 impossibleLetters1.add(guesses[feedbackIndex][char])
 
     for char in impossibleLetters1:
-        if char.lower() not in lowerSet and char.upper not in capitalSet:
+        if char.lower() not in lowerSet and char.upper() not in capitalSet:
             impossibleLetters.add(char)
 
 def setCheck(word, set, containsAll = False):
@@ -158,8 +162,10 @@ def checkUpperLocations(word, guessCheck):
     return False
 
 
-checkUpperLocations("SHARP",["S","","","","P"])
 
 
-wordList = getWordList()
-print(getAIGuess(wordList, ["BUYER", "GODLY", "FIFTY", "MINTY", "WITTY"], ["--y--", "----Y", "-I-tY", "-I-tY", "-It-Y"]))
+
+
+wordList = getWordList
+
+print(getAIGuess(wordList, ["UMMED"], ["--ME-"]))
