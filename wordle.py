@@ -93,9 +93,9 @@ def getColor(guess, secretWord):
     return colorString
 
 def playGame(wordList):
-    secretWord = wordList[random.randint(0, len(wordList))]
+    secretWord = "BROOM"
     print(F"\n-----Welcome to WORDLE-----\n")
-    guess = input("Enter 5 letter guess ('AI') for AI: ")
+    guess = input("Enter 5 letter guess ('AI') for AI:\n")
     guesses = []
     feedbacks = []
 
@@ -103,7 +103,7 @@ def playGame(wordList):
         guess = getAIGuess(wordList, guesses, feedbacks)
     else:
         while guess.upper() not in wordList:
-            guess = input("Input a valid word: ")
+            guess = input("Input a valid word:\n")
 
     feedback = (Style.RESET_ALL+ Back.WHITE + "       \n" + getColor(guess, secretWord) + "       \n" + Style.RESET_ALL)
     print(feedback)
@@ -112,14 +112,14 @@ def playGame(wordList):
     feedbacks.append(getFeedback(guess, secretWord))
 
     while attempts <= 5 and guess.lower() != secretWord.lower():
-        guess = input("Enter guess ('AI') for AI: ")
+        guess = input("Enter guess ('AI') for AI:\n")
         attempts += 1
 
         if guess.lower() == "ai":
             guess = getAIGuess(wordList, guesses, feedbacks)
         else:
             while guess.upper() not in wordList:
-                guess = input("Input a valid word: ")
+                guess = input("Input a valid word:\n")
         guesses.append(guess.upper())
         feedbacks.append(getFeedback(guess, secretWord))
         # top and bottom border here
@@ -141,7 +141,7 @@ def getAIGuess(wordList, guesses, feedback):
         Returns:
          str: a valid guess that is exactly 5 uppercase letters
     '''
-    print(wordList)
+
 
     capitalLocs = {}
     lowerLocs = {}
@@ -160,22 +160,11 @@ def getAIGuess(wordList, guesses, feedback):
     for guess in guesses:
         guess = guess.upper()
 
-    aiGuess = "" #this AI guess will build and grow based off of the parameters
-    #first, it will check in the feedbacks for uppercased letters
-    #then for the lowercased, lapel --> alley, so l--El
-
-    # First: capital letters, to build the guessCheck
-    # Then: eliminate lower letter locations
-
-    # ["CRANE","NEATS"] & ["--ane","nEa-s"]
-    # for the feedback, the cant locations of 'a' = [2], 'n' = [3,0], 'e' = [4], 's' = [4]
-
-    # Checking if the guesses and the feedback are empty
     rand = random.randint(0,len(wordList)-1)
     if len(guesses) == 0:
         return wordList[rand]
-
-    # Checking if the 
+        
+    #Initial
     for feedbackIndex in range(len(feedback)):
         guess = feedback[feedbackIndex]
         for char in range(len(guess)):
@@ -189,20 +178,18 @@ def getAIGuess(wordList, guesses, feedback):
                 lowerSet.add(guessChar)
 
             elif guessChar.isupper():
-                capitalSet.add(guessChar)
                 capitalLocs[guessChar] = 1
+                capitalSet.add(guessChar)
                 guessCheck[char] = guessChar
-                # lowerSet.add(guessChar.lower())
             
             else: # if the character is a "-"
                 impossibleLetters1.add(guesses[feedbackIndex][char])
 
     for char in impossibleLetters1:
-        if char.lower() not in lowerSet: # and char.upper() not in capitalSet
+        if char.lower() not in lowerSet and char.upper() not in capitalSet:
             impossibleLetters.add(char)
 
     
-
     if capitalLocs != {}:
         for word in wordList:
             if checkUpperLocations(word, guessCheck):
@@ -211,16 +198,13 @@ def getAIGuess(wordList, guesses, feedback):
         for word in wordList:
             possibleGuesses.append(word)
     
-    print("--------")
-    print(guesses)
-    print(feedback)
-    print("possibleGuesses:")
-    print(possibleGuesses)
-    print("impossible letters:")
-    print(impossibleLetters)
-    print("lower set:")
-    print(lowerSet)
+    # if len(wordList) > 10000:
+    #     rand = random.randint(0,len(possibleGuesses)-1)
+    #     return possibleGuesses[rand]
+ 
 
+    if len(possibleGuesses) == 1:
+        return possibleGuesses[0]
 
     if impossibleLetters != set():
         for word in possibleGuesses:
@@ -229,13 +213,12 @@ def getAIGuess(wordList, guesses, feedback):
     else:
         for word in possibleGuesses:
             possibleGuesses1.append(word)
-            
-    print(possibleGuesses1)
-    # if len(possibleGuesses1) == 1:
-    #     return possibleGuesses1[0]
-    
-    if lowerLocs != {}:
 
+    if len(possibleGuesses1) == 1:
+        return possibleGuesses1[0]
+
+
+    if lowerLocs != {}:
         # Each word
         for index in range(len(possibleGuesses1)):
             word = possibleGuesses1[index]
@@ -254,27 +237,14 @@ def getAIGuess(wordList, guesses, feedback):
     else:
         for index in possibleGuesses1:
             possibleGuesses2.append(index)
-
-    print("options:")
-    print(possibleGuesses2)
-    
+        
     if len(possibleGuesses2) == 1:
         return possibleGuesses2[0]
     else:
-        print(possibleGuesses2)
+        # print(possibleGuesses2)
         rand = random.randint(0,len(possibleGuesses2)-1)
         return possibleGuesses2[rand]
 
-
-    # return possibleGuesses
-    
-    # for key in lowerLocs:
-    #     for wordIndex in range(len(possibleGuesses)):
-    #         word = possibleGuesses[wordIndex]
-    #         if word.find(key.upper()) != -1:
-    #             possibleGuesses2.append(word)
-
-    # return possibleGuesses
 
 def setCheck(word, set, containsAll = False):
     if containsAll:
@@ -322,11 +292,12 @@ def checkUpperLocations(word, guessCheck):
 
 
 wordList = getWordList()
+
 playGameBool = True
 
 while playGameBool == True:
     playGame(wordList)
-    playAgain = input("Do you want to play again?")
+    playAgain = input("Do you want to play again?\n")
     if playAgain.lower() not in ["yes","y","yas","yass","uh huh"]:
         playGameBool = False
     
